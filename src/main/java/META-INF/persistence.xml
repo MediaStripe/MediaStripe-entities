@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="MediaStripe-entities">
+		<!-- Entity classes -->
+		<class>com.imie.entities.Episode</class>
+		<class>com.imie.entities.Fichier</class>
+		<class>com.imie.entities.Film</class>
+		<class>com.imie.entities.Galerie</class>
+		<class>com.imie.entities.Media</class>
+		<class>com.imie.entities.Musique</class>
+		<class>com.imie.entities.Photo</class>
+		<class>com.imie.entities.Playlist</class>
+		<class>com.imie.entities.Salle</class>
+		<class>com.imie.entities.Tag</class>
+		<class>com.imie.entities.Utilisateur</class>
+		<class>com.imie.entities.Video</class>
+
+		<!-- Properties -->
+		<properties>
+			<!-- Database connection -->
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://localhost:5432/mediastripe" />
+			<property name="javax.persistence.jdbc.user" value="cdpn07" />
+			<property name="javax.persistence.jdbc.password" value="passe" />
+
+			<!-- Used dialect -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+		</properties>
+	</persistence-unit>
+</persistence>
