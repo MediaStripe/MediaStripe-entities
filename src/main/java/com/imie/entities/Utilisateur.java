@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,7 +28,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "utilisateur")
-@NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
+@NamedQueries({
+	@NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u"),
+	@NamedQuery(name = "Utilisateur.findByEmail", query = "SELECT u FROM Utilisateur u WHERE u.mail = :mail")
+})
 public class Utilisateur implements Serializable {
 
 	/** The Constant serialVersionUID. */
@@ -68,6 +72,7 @@ public class Utilisateur implements Serializable {
 	 * Indicateur spécifiant si l'utilisateur possède des droits
 	 * d'administrateur.
 	 */
+	@Column
 	private Boolean administrateur;
 
 	/** Liste des médias qu'a publié l'utilisateur. */
@@ -107,6 +112,7 @@ public class Utilisateur implements Serializable {
 	/** Constructeur par défaut. */
 	public Utilisateur() {
 		super();
+		administrateur = false;
 		medias = new ArrayList<Media>();
 		salles = new ArrayList<Salle>();
 		contacts = new ArrayList<Utilisateur>();
