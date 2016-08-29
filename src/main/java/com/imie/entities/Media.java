@@ -3,6 +3,7 @@ package com.imie.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -90,6 +91,15 @@ public class Media implements Serializable {
 				+ description + ", datecreation=" + datecreation
 				+ ", publique=" + publique + ", publieur=" + publieur
 				+ ", mainTheme=" + mainTheme + ", listeTags=" + listeTags + "]";
+	}
+
+	/**
+	 * Ajoute un tag à la liste de tags et met le média en référence du tag.
+	 * @param tag Le tag à ajouter.
+	 */
+	public void addTag(Tag tag) {
+		listeTags.add(tag);
+		tag.getMedias().add(this);
 	}
 
 	/**

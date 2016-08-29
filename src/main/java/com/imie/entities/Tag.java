@@ -13,7 +13,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "tag")
-@NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t")
+@NamedQueries({
+	@NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t"),
+	@NamedQuery(name = "Tag.findByLibelle", query = "SELECT t FROM Tag t WHERE t.libelle = :libelle")
+})
 public class Tag implements Serializable {
 
 	/** The Constant serialVersionUID. */
@@ -38,7 +41,18 @@ public class Tag implements Serializable {
 		super();
 		medias = new ArrayList<Media>();
 	}
-	
+
+	/**
+	 * Initialise un nouveau tag à partir du libellé passé en paramètre.
+	 * 
+	 * @param libelle
+	 *            Le libellé du tag.
+	 */
+	public Tag(String libelle) {
+		this();
+		this.libelle = libelle;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder bld = new StringBuilder();

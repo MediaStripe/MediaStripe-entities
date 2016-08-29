@@ -24,6 +24,11 @@ public class Fichier extends Media implements Serializable {
 	/** Chemin du fichier sur le serveur. */
 	@Column(length = 255)
 	private String cheminfichier;
+	
+	/**
+	 * La liste des m
+	 */
+	private transient String motsClefs;
 
 	/** Constructeur par défaut. */
 	public Fichier() {
@@ -47,5 +52,23 @@ public class Fichier extends Media implements Serializable {
 	 */
 	public void setCheminfichier(String cheminfichier) {
 		this.cheminfichier = cheminfichier;
+	}
+
+	/**
+	 * Gets the mots clefs.
+	 *
+	 * @return the mots clefs
+	 */
+	public String getMotsClefs() {
+		return motsClefs;
+	}
+
+	/**
+	 * Sets the mots clefs.
+	 *
+	 * @param motsClefs the new mots clefs
+	 */
+	public void setMotsClefs(String motsClefs) {
+		this.motsClefs = motsClefs;
 	}
 }

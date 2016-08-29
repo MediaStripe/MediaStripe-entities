@@ -9,7 +9,7 @@ create table utilisateur (
 	id serial,
 	nom varchar(100),
 	prenom varchar(100),
-	mail varchar(150),
+	mail varchar(150) constraint utilisateur_mail_unique unique,
 	dateinscription date,
 	derniereconnexion timestamp,
 	motdepasse varchar(255),
@@ -20,7 +20,7 @@ create table utilisateur (
 ----- Création de la table "tag" -----
 create table tag (
 	id serial,
-	libelle varchar(150),
+	libelle varchar(150) constraint tag_libelle_unique unique,
 	constraint pk_tag primary key (id)
 );
 
