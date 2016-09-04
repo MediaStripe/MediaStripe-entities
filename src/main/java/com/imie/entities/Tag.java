@@ -56,8 +56,7 @@ public class Tag implements Serializable {
 	@Override
 	public String toString() {
 		final StringBuilder bld = new StringBuilder();
-		bld.append("Tag [id=" + id + ", libelle=" + libelle + ", medias=");
-		bld.append(Arrays.toString(medias.toArray())).append("]");
+		bld.append("Tag [id=" + id + ", libelle=" + libelle);
 		return bld.toString();
 	}
 

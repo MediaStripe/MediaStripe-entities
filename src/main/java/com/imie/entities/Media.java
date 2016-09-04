@@ -88,8 +88,7 @@ public class Media implements Serializable {
 	@Override
 	public String toString() {
 		return "Media [id=" + id + ", titre=" + titre + ", description="
-				+ description + ", datecreation=" + datecreation
-				+ ", publique=" + publique + ", publieur=" + publieur
+				+ description + ", publique=" + publique + ", publieur=" + publieur.getNom() + " " + publieur.getPrenom()
 				+ ", mainTheme=" + mainTheme + ", listeTags=" + listeTags + "]";
 	}
 

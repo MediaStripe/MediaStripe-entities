@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "utilisateur")
-@NamedQueries({
+@NamedQueries({ 
 	@NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u"),
 	@NamedQuery(name = "Utilisateur.findByEmail", query = "SELECT u FROM Utilisateur u WHERE u.mail = :mail")
 })
@@ -42,7 +42,7 @@ public class Utilisateur implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private Integer id;
-	
+
 	/** Nom. */
 	@Column(length = 100)
 	private String nom;
@@ -50,24 +50,24 @@ public class Utilisateur implements Serializable {
 	/** Prénom. */
 	@Column(length = 100)
 	private String prenom;
-	
+
 	/** Adresse email. */
 	@Column(length = 150)
 	private String mail;
-	
+
 	/** Date d'inscription. */
 	@Temporal(TemporalType.DATE)
 	@Column
 	private Date dateinscription;
-	
+
 	/** Date de la dernière connexion. (comportant l'heure exacte) */
 	@Column
 	private Timestamp derniereconnexion;
-	
+
 	/** Mot de passe. */
 	@Column(length = 255)
 	private String motdepasse;
-	
+
 	/**
 	 * Indicateur spécifiant si l'utilisateur possède des droits
 	 * d'administrateur.
@@ -87,24 +87,24 @@ public class Utilisateur implements Serializable {
 	private List<Salle> salles;
 
 	/** Liste de contacts. */
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-			name="contact",
-			joinColumns = @JoinColumn(name="utilisateur1", 
-					referencedColumnName="id"),
-			inverseJoinColumns = @JoinColumn(name="utilisateur2", 
+			name = "contact", 
+			joinColumns = @JoinColumn(name = "utilisateur1", 
+					referencedColumnName = "id"), 
+			inverseJoinColumns = @JoinColumn(name = "utilisateur2", 
 					referencedColumnName = "id")
 	)
 	private List<Utilisateur> contacts;
 
 	/** Liste des utilisateurs publieurs que ce dernier suit. */
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	// XXX : joinColumn et inverseJoinColumn à inverser ?
 	@JoinTable(
-			name="abonnement",
-			joinColumns = @JoinColumn(name="publieur", 
-					referencedColumnName="id"),
-			inverseJoinColumns = @JoinColumn(name="abonne", 
+			name = "abonnement", 
+			joinColumns = @JoinColumn(name = "publieur", 
+					referencedColumnName = "id"), 
+			inverseJoinColumns = @JoinColumn(name = "abonne", 
 					referencedColumnName = "id")
 	)
 	private List<Utilisateur> publishers;
@@ -122,18 +122,15 @@ public class Utilisateur implements Serializable {
 	@Override
 	public String toString() {
 		final StringBuilder bld = new StringBuilder();
-		
-		bld.append("Utilisateur [id=" + id + ", nom=" + nom + ", prenom=" + prenom
-				+ ", mail=" + mail + ", dateinscription=" + dateinscription
-				+ ", derniereconnexion=" + derniereconnexion + ", motdepasse="
-				+ motdepasse + ", administrateur=" + administrateur
-				+ ", medias=");
-		
+
+		bld.append("Utilisateur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motdepasse="
+				+ motdepasse + ", administrateur=" + administrateur + ", medias=");
+
 		bld.append(Arrays.toString(medias.toArray())).append(", salles=");
 		bld.append(Arrays.toString(salles.toArray())).append(", contacts=");
 		bld.append(Arrays.toString(contacts.toArray())).append(", publishers=");
 		bld.append(Arrays.toString(publishers.toArray())).append("]");
-		
+
 		return bld.toString();
 	}
 
