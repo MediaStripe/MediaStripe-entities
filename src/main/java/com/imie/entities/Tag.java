@@ -1,12 +1,21 @@
 package com.imie.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * Classe représentant un tag en base.
@@ -29,17 +38,21 @@ public class Tag implements Serializable {
 	private Integer id;
 
 	/** Libelle. */
-	@Column(length = 150)
+	@Column(length = 150, unique = true, nullable = false)
 	private String libelle;
 
 	/** Liste des médias associés au tag. */
 	@OneToMany(mappedBy = "mainTheme", fetch = FetchType.EAGER)
-	private List<Media> medias;
+	private List<Media> mediasAThemePrincipal;
 
+	@ManyToMany(mappedBy = "listeTags")
+	private List<Media> mediasAssocies;
+	
 	/** Constructeur par défaut. */
 	public Tag() {
 		super();
-		medias = new ArrayList<Media>();
+		mediasAThemePrincipal = new ArrayList<Media>();
+		mediasAssocies = new ArrayList<Media>();
 	}
 
 	/**
@@ -67,10 +80,8 @@ public class Tag implements Serializable {
 	 *            the media
 	 * @return the media
 	 */
-	public Media addMedia(Media media) {
-		getMedias().add(media);
-		media.setMainTheme(this);
-		return media;
+	public void addMedia(Media media) {
+		mediasAssocies.add(media);
 	}
 
 	/**
@@ -94,16 +105,6 @@ public class Tag implements Serializable {
 	 */
 	public Integer getId() {
 		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	/**
@@ -131,7 +132,7 @@ public class Tag implements Serializable {
 	 * @return the medias
 	 */
 	public List<Media> getMedias() {
-		return medias;
+		return mediasAThemePrincipal;
 	}
 
 	/**
@@ -141,7 +142,15 @@ public class Tag implements Serializable {
 	 *            the new medias
 	 */
 	public void setMedias(List<Media> medias) {
-		this.medias = medias;
+		this.mediasAThemePrincipal = medias;
+	}
+
+	public List<Media> getMediasAssocies() {
+		return mediasAssocies;
+	}
+
+	public void setMediasAssocies(List<Media> mediasAssocies) {
+		this.mediasAssocies = mediasAssocies;
 	}
 
 }

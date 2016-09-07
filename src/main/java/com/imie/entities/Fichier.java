@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Classe représentant un fichier en base.
@@ -28,6 +29,7 @@ public class Fichier extends Media implements Serializable {
 	/**
 	 * La liste des m
 	 */
+	@Transient
 	private transient String motsClefs;
 
 	/** Constructeur par défaut. */

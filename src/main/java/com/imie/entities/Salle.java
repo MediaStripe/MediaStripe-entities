@@ -46,16 +46,6 @@ public class Salle implements Serializable {
 	}
 
 	/**
-	 * Sets the id.
-	 *
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
 	 * Gets the nom.
 	 *
 	 * @return the nom

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,11 +44,11 @@ public class Media implements Serializable {
 	private Integer id;
 
 	/** Titre. */
-	@Column(length = 150)
+	@Column
 	private String titre;
 
 	/** Description. */
-	@Column(length = 255)
+	@Column
 	private String description;
 	
 	/** Date de création. */
@@ -58,27 +59,33 @@ public class Media implements Serializable {
 	@Column
 	private Boolean publique;
 
+	/* *************************************** */
+	/* R E L A T I O N S */
+	/* *************************************** */
+	
 	/** Publieur. */
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "publieur")
 	private Utilisateur publieur;
 
 	/** Thème principal. */
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "theme")
 	private Tag mainTheme;
 
 	/** The liste tags. */
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
 	@JoinTable(
 			name="associationtag",
-			joinColumns = @JoinColumn(name="media", 
-									referencedColumnName="id"),
-			inverseJoinColumns = @JoinColumn(name="tag", 
-									referencedColumnName = "id")
+			joinColumns = @JoinColumn(name="media"),
+			inverseJoinColumns = @JoinColumn(name="tag")
 	)
 	private List<Tag> listeTags;
 
+	/* *************************************** */
+	/* M É T H O D E S */
+	/* *************************************** */
+	
 	/** Constructeur par défaut. */
 	public Media() {
 		super();
@@ -98,150 +105,69 @@ public class Media implements Serializable {
 	 */
 	public void addTag(Tag tag) {
 		listeTags.add(tag);
-		tag.getMedias().add(this);
+		tag.addMedia(this);
 	}
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * Gets the titre.
-	 *
-	 * @return the titre
-	 */
 	public String getTitre() {
 		return titre;
 	}
 
-	/**
-	 * Sets the titre.
-	 *
-	 * @param titre the new titre
-	 */
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
 
-	/**
-	 * Gets the description.
-	 *
-	 * @return the description
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * Sets the description.
-	 *
-	 * @param description the new description
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * Gets the datecreation.
-	 *
-	 * @return the datecreation
-	 */
 	public Timestamp getDatecreation() {
 		return datecreation;
 	}
 
-	/**
-	 * Sets the datecreation.
-	 *
-	 * @param datecreation the new datecreation
-	 */
 	public void setDatecreation(Timestamp datecreation) {
 		this.datecreation = datecreation;
 	}
 
-	/**
-	 * Gets the publique.
-	 *
-	 * @return the publique
-	 */
-	public Boolean getPublique() {
+	public Boolean isPublique() {
 		return publique;
 	}
 
-	/**
-	 * Sets the publique.
-	 *
-	 * @param publique the new publique
-	 */
 	public void setPublique(Boolean publique) {
 		this.publique = publique;
 	}
 
-	/**
-	 * Gets the publieur.
-	 *
-	 * @return the publieur
-	 */
 	public Utilisateur getPublieur() {
 		return publieur;
 	}
 
-	/**
-	 * Sets the publieur.
-	 *
-	 * @param publieur the new publieur
-	 */
 	public void setPublieur(Utilisateur publieur) {
 		this.publieur = publieur;
+		publieur.getMedias().add(this);
 	}
 
-	/**
-	 * Gets the tag.
-	 *
-	 * @return the tag
-	 */
 	public Tag getMainTheme() {
 		return mainTheme;
 	}
 
-	/**
-	 * Sets the tag.
-	 *
-	 * @param tag the new tag
-	 */
-	public void setMainTheme(Tag tag) {
-		this.mainTheme = tag;
+	public void setMainTheme(Tag mainTheme) {
+		this.mainTheme = mainTheme;
 	}
 
-	/**
-	 * Gets the liste tags.
-	 *
-	 * @return the liste tags
-	 */
 	public List<Tag> getListeTags() {
 		return listeTags;
 	}
 
-	/**
-	 * Sets the liste tags.
-	 *
-	 * @param listeTags the new liste tags
-	 */
 	public void setListeTags(List<Tag> listeTags) {
 		this.listeTags = listeTags;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	
 }

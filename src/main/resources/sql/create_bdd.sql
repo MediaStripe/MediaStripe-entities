@@ -30,12 +30,12 @@ create table media (
 	titre varchar(150),
 	description varchar(255),
 	datecreation timestamp,
-	publique boolean,
-	publieur integer,
+	publique boolean default true,
+	publieur integer not null,
 	theme integer,
 	constraint pk_media primary key (id),
 	constraint fk_media_publieur foreign key (publieur) references utilisateur (id),
-	constraint fk_media_theme foreign key (theme) references tag (id)
+	constraint fk_media_theme foreign key (theme) references tag (id),
 );
 
 ----- Création de la table "fichier" -----

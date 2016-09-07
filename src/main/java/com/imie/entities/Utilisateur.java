@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,6 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name = "Utilisateur.findByEmail", query = "SELECT u FROM Utilisateur u WHERE u.mail = :mail")
 })
 public class Utilisateur implements Serializable {
-
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
@@ -44,15 +44,15 @@ public class Utilisateur implements Serializable {
 	private Integer id;
 
 	/** Nom. */
-	@Column(length = 100)
+	@Column
 	private String nom;
 
 	/** Prénom. */
-	@Column(length = 100)
+	@Column
 	private String prenom;
 
 	/** Adresse email. */
-	@Column(length = 150)
+	@Column(unique = true, nullable = false)
 	private String mail;
 
 	/** Date d'inscription. */
@@ -65,7 +65,7 @@ public class Utilisateur implements Serializable {
 	private Timestamp derniereconnexion;
 
 	/** Mot de passe. */
-	@Column(length = 255)
+	@Column
 	private String motdepasse;
 
 	/**
@@ -75,8 +75,12 @@ public class Utilisateur implements Serializable {
 	@Column
 	private Boolean administrateur;
 
+	/* *************************************** */
+	/* R E L A T I O N S */
+	/* *************************************** */
+	
 	/** Liste des médias qu'a publié l'utilisateur. */
-	@OneToMany(mappedBy = "publieur", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "publieur", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Media> medias;
 
 	/**
@@ -99,16 +103,19 @@ public class Utilisateur implements Serializable {
 
 	/** Liste des utilisateurs publieurs que ce dernier suit. */
 	@ManyToMany(fetch = FetchType.EAGER)
-	// XXX : joinColumn et inverseJoinColumn à inverser ?
 	@JoinTable(
 			name = "abonnement", 
 			joinColumns = @JoinColumn(name = "publieur", 
-					referencedColumnName = "id"), 
-			inverseJoinColumns = @JoinColumn(name = "abonne", 
+					referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "abonne",
 					referencedColumnName = "id")
 	)
 	private List<Utilisateur> publishers;
 
+	/* *************************************** */
+	/* M É T H O D E S */
+	/* *************************************** */
+	
 	/** Constructeur par défaut. */
 	public Utilisateur() {
 		super();
@@ -169,16 +176,6 @@ public class Utilisateur implements Serializable {
 	 */
 	public Integer getId() {
 		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	/**
