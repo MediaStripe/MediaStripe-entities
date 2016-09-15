@@ -107,7 +107,35 @@ public class Media implements Serializable {
 		listeTags.add(tag);
 		tag.addMedia(this);
 	}
+	
+	public boolean isFichier() {
+		return this instanceof Fichier;
+	}
+	
+	public boolean isPhoto() {
+		return this instanceof Photo;
+	}
 
+	public boolean isMusique() {
+		return this instanceof Musique;
+	}
+	
+	public boolean isVideo() {
+		return this instanceof Video;
+	}
+	
+	public boolean isEpisode() {
+		return this instanceof Episode;
+	}
+	
+	public boolean isFilm() {
+		return this instanceof Film;
+	}
+	
+	public boolean isGalerie() {
+		return this instanceof Galerie;
+	}
+	
 	public String getTitre() {
 		return titre;
 	}
