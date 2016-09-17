@@ -13,7 +13,8 @@ import javax.persistence.Transient;
  * Classe représentant un fichier en base.
  */
 @NamedQueries({
-	@NamedQuery(name = "Fichier.findAll", query = "SELECT f FROM Fichier f")
+	@NamedQuery(name = "Fichier.findAll", query = "SELECT f FROM Fichier f"),
+	@NamedQuery(name = "Fichier.findByPath", query = "SELECT f FROM Fichier f WHERE f.cheminfichier = :cheminfichier")
 })
 @Entity
 @Table(name = "fichier")
@@ -26,12 +27,6 @@ public class Fichier extends Media implements Serializable {
 	@Column(length = 255)
 	private String cheminfichier;
 	
-	/**
-	 * La liste des m
-	 */
-	@Transient
-	private transient String motsClefs;
-
 	/** Constructeur par défaut. */
 	public Fichier() {
 		super();
@@ -54,23 +49,5 @@ public class Fichier extends Media implements Serializable {
 	 */
 	public void setCheminfichier(String cheminfichier) {
 		this.cheminfichier = cheminfichier;
-	}
-
-	/**
-	 * Gets the mots clefs.
-	 *
-	 * @return the mots clefs
-	 */
-	public String getMotsClefs() {
-		return motsClefs;
-	}
-
-	/**
-	 * Sets the mots clefs.
-	 *
-	 * @param motsClefs the new mots clefs
-	 */
-	public void setMotsClefs(String motsClefs) {
-		this.motsClefs = motsClefs;
 	}
 }

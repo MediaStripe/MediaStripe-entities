@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Classe représentant un média en base.
@@ -58,23 +59,29 @@ public class Media implements Serializable {
 	/** Indicateur spécifiant si le média est publique ou privé. */
 	@Column
 	private Boolean publique;
+	
+	/**
+	 * La liste des mots clés séparés par des point-virgules.
+	 */
+	@Transient
+	private transient String motsClefs;
 
 	/* *************************************** */
 	/* R E L A T I O N S */
 	/* *************************************** */
 	
 	/** Publieur. */
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "publieur")
 	private Utilisateur publieur;
 
 	/** Thème principal. */
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "theme")
 	private Tag mainTheme;
 
 	/** The liste tags. */
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
 	@JoinTable(
 			name="associationtag",
 			joinColumns = @JoinColumn(name="media"),
@@ -163,6 +170,11 @@ public class Media implements Serializable {
 	public Boolean isPublique() {
 		return publique;
 	}
+	
+	// Utile pour les JSP
+	public Boolean getPublique() {
+		return publique;
+	}
 
 	public void setPublique(Boolean publique) {
 		this.publique = publique;
@@ -197,5 +209,11 @@ public class Media implements Serializable {
 		return id;
 	}
 
-	
+	public String getMotsClefs() {
+		return motsClefs;
+	}
+
+	public void setMotsClefs(String motsClefs) {
+		this.motsClefs = motsClefs;
+	}
 }

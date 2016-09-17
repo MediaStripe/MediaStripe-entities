@@ -42,7 +42,7 @@ public class Tag implements Serializable {
 	private String libelle;
 
 	/** Liste des médias associés au tag. */
-	@OneToMany(mappedBy = "mainTheme", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "mainTheme", fetch = FetchType.LAZY)
 	private List<Media> mediasAThemePrincipal;
 
 	@ManyToMany(mappedBy = "listeTags")

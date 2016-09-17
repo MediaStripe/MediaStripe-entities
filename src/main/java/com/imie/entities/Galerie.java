@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -23,7 +24,7 @@ public class Galerie extends Playlist implements Serializable {
 	private static final long serialVersionUID = -7542617192928430347L;
 
 	/** Liste des photos. */
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	@JoinTable(
 			name="contenugalerie",
 			joinColumns = @JoinColumn(name="galerie", referencedColumnName="id"),

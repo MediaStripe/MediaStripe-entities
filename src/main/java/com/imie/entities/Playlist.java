@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -28,7 +29,7 @@ public class Playlist extends Media implements Serializable {
 	private String nom;
 
 	/** The medias. */
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "contenuplaylist", 
 			joinColumns = @JoinColumn(name = "idplaylist", referencedColumnName = "id"), 

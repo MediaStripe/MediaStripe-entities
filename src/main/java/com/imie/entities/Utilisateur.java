@@ -80,18 +80,18 @@ public class Utilisateur implements Serializable {
 	/* *************************************** */
 	
 	/** Liste des médias qu'a publié l'utilisateur. */
-	@OneToMany(mappedBy = "publieur", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(mappedBy = "publieur", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Media> medias;
 
 	/**
 	 * Liste des sales qu'a créé l'utilisateur (uniquement s'il est
 	 * administrateur).
 	 */
-	@OneToMany(mappedBy = "createur", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "createur", fetch = FetchType.LAZY)
 	private List<Salle> salles;
 
 	/** Liste de contacts. */
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "contact", 
 			joinColumns = @JoinColumn(name = "utilisateur1", 
