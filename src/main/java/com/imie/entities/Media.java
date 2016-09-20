@@ -3,7 +3,6 @@ package com.imie.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,7 +27,8 @@ import javax.persistence.Transient;
  * Classe représentant un média en base.
  */
 @NamedQueries({
-	@NamedQuery(name = "Media.findAll", query = "SELECT m FROM Media m")
+	@NamedQuery(name = "Media.findAll", query = "SELECT m FROM Media m"),
+	@NamedQuery(name = "Media.getDerniersPublies", query = "SELECT m FROM Media m ORDER BY m.datecreation DESC")
 })
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
