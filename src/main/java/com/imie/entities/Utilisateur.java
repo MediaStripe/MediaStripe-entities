@@ -91,7 +91,7 @@ public class Utilisateur implements Serializable {
 	private List<Salle> salles;
 
 	/** Liste de contacts. */
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(
 			name = "contact", 
 			joinColumns = @JoinColumn(name = "utilisateur1", 
@@ -132,11 +132,11 @@ public class Utilisateur implements Serializable {
 
 		bld.append("Utilisateur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", motdepasse="
 				+ motdepasse + ", administrateur=" + administrateur + ", medias=");
-
-		bld.append(Arrays.toString(medias.toArray())).append(", salles=");
-		bld.append(Arrays.toString(salles.toArray())).append(", contacts=");
-		bld.append(Arrays.toString(contacts.toArray())).append(", publishers=");
-		bld.append(Arrays.toString(publishers.toArray())).append("]");
+//
+//		bld.append(Arrays.toString(medias.toArray())).append(", salles=");
+//		bld.append(Arrays.toString(salles.toArray())).append(", contacts=");
+////		bld.append(Arrays.toString(contacts.toArray())).append(", publishers=");
+//		bld.append(Arrays.toString(publishers.toArray())).append("]");
 
 		return bld.toString();
 	}
